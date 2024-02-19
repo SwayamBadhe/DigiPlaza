@@ -1,9 +1,19 @@
+import * as trpcExpress from '@trpc/server/adapters/express';
 import express from 'express';
 import { getPayLoadClient } from './get-payload';
 import { nextApp, nextHandler } from './next-utils';
+import { appRouter } from './trpc';
 
 const app = express();
 const PORT = Number(process.env.PORT) || 3000;
+
+const createContext = ({
+  req,
+  res,
+}: trpcExpress.CreateExpressContextOptions) => ({
+  req,
+  res,
+});
 
 const start = async () => {
   const payload = await getPayLoadClient({
@@ -14,6 +24,17 @@ const start = async () => {
       },
     },
   });
+
+  /**
+   * Binding tRPC middleware to specefic route
+   */
+  app.use(
+    '/api/trpc',
+    trpcExpress.createExpressMiddleware({
+      router: appRouter,
+      createContext,
+    })
+  );
 
   app.use((req, res) => nextHandler(req, res));
 
