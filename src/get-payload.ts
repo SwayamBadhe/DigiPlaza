@@ -45,7 +45,7 @@ export const getPayLoadClient = async ({
     cached.promise = payload.init({
       email: {
         transport: transporter,
-        fromAddress: 'onboarding@resend.com',
+        fromAddress: 'swayampbadhe@gmail.com',
         fromName: 'DigiPlaza',
       },
       /**
