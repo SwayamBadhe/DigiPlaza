@@ -27,7 +27,7 @@ const VerifyEmail = ({ token }: VerifyEmailProps) => {
     );
   }
 
-  if (data?.suceess) {
+  if (data?.success) {
     return (
       <div className="flex flex-col items-center justify-center">
         <div className="relative h-60 w-60 text-muted-foreground">
