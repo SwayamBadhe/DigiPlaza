@@ -1,8 +1,8 @@
 import { TRPCError } from '@trpc/server';
+import { z } from 'zod';
 import { getPayLoadClient } from '../get-payload';
 import { AuthCredentialsValidator } from '../lib/validators/account-credentails';
 import { publicProcedure, router } from './trpc';
-import { z } from 'zod';
 
 export const authRouter = router({
   createPayloadUser: publicProcedure
@@ -56,6 +56,33 @@ export const authRouter = router({
       if (!isVerified)
         throw new TRPCError({ code: 'UNAUTHORIZED', message: 'Invalid token' });
 
-      return { suceess: true };
+      return { success: true };
+    }),
+
+  SignIn: publicProcedure
+    .input(AuthCredentialsValidator)
+    .mutation(async ({ input, ctx }) => {
+      const { email, password } = input;
+      const { res } = ctx;
+
+      const payload = await getPayLoadClient();
+
+      try {
+        await payload.login({
+          collection: 'users',
+          data: {
+            email,
+            password,
+          },
+          res,
+        });
+
+        return { success: true };
+      } catch (err) {
+        throw new TRPCError({
+          code: 'UNAUTHORIZED',
+          message: 'Invalid credentials',
+        });
+      }
     }),
 });
