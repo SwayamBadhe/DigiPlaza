@@ -30,5 +30,10 @@ export const Users: CollectionConfig = {
         },
       ],
     },
+    {
+      name: '_verified',
+      defaultValue: true,
+      type: 'checkbox',
+    },
   ],
 };
