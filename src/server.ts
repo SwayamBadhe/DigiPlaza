@@ -3,6 +3,7 @@ import express from 'express';
 import { getPayLoadClient } from './get-payload';
 import { nextApp, nextHandler } from './next-utils';
 import { appRouter } from './trpc';
+import { inferAsyncReturnType } from '@trpc/server';
 
 const app = express();
 const PORT = Number(process.env.PORT) || 3000;
@@ -14,6 +15,8 @@ const createContext = ({
   req,
   res,
 });
+
+export type ExpressContext = inferAsyncReturnType<typeof createContext>;
 
 const start = async () => {
   const payload = await getPayLoadClient({
