@@ -16,6 +16,9 @@ const transporter = nodemailer.createTransport({
     user: 'resend',
     pass: process.env.RESEND_API_KEY,
   },
+  tls: {
+    rejectUnauthorized: false,
+  },
 });
 
 let cached = (global as any).payload;
@@ -45,7 +48,7 @@ export const getPayLoadClient = async ({
     cached.promise = payload.init({
       email: {
         transport: transporter,
-        fromAddress: 'swayampbadhe@gmail.com',
+        fromAddress: 'onboarding@resend.dev',
         fromName: 'DigiPlaza',
       },
       /**
