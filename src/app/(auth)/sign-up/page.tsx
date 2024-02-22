@@ -47,8 +47,10 @@ const Page = () => {
       toast.error('Something went wrong. Please try again later.');
     },
     onSuccess: ({ sentToEmail }) => {
-      toast.success(`Verificaiton email sent to ${sentToEmail}.`);
-      router.push('/verify-email?to=' + sentToEmail);
+      // toast.success(`Verificaiton email sent to ${sentToEmail}.`);
+      // router.push('/verify-email?to=' + sentToEmail);
+      toast.success('Account created successfully');
+      router.push('/sign-in');
     },
   });
 
